@@ -4,6 +4,7 @@ using BlazorHero.CleanArchitecture.Infrastructure.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BlazorHero.CleanArchitecture.Infrastructure.Contexts
 {
-    public abstract class AuditableContext : IdentityDbContext<BlazorHeroUser, BlazorHeroRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, BlazorHeroRoleClaim, IdentityUserToken<string>>
+    public abstract partial class AuditableContext : IdentityDbContext<BlazorHeroUser, BlazorHeroRole, string, IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>, BlazorHeroRoleClaim, IdentityUserToken<string>>
     {
         protected AuditableContext(DbContextOptions options) : base(options)
         {
@@ -109,6 +110,11 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Contexts
                 AuditTrails.Add(auditEntry.ToAudit());
             }
             return SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>().HaveConversion<DateTimeToIso8601StringConverter>();
         }
     }
 }

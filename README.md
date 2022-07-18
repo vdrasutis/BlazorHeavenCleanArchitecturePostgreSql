@@ -94,7 +94,7 @@ The easiest way to get started with Blazor Hero is to install the [NuGet package
 
 1. Install the latest [.NET 6 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 2. Install the latest DOTNET & EF CLI Tools by using this command `dotnet tool install --global dotnet-ef` 
-3. Install the latest version of Visual Studio IDE 2019 (v16.8 and above) 🚀
+3. Install the latest version of Visual Studio IDE 2022 (v17.2 and above) 🚀
 4. Open up Command Prompt and run `dotnet new --install BlazorHero.CleanArchitecture` to install the project template
 5. Create a folder for your solution and cd into it (the template will use it as project name)
 6. Run `dotnet new BlazorHero.CleanArchitecture` to create a new Solution with all the Awesomeness 🕶️ of BlazorHero 🦸
@@ -111,10 +111,11 @@ What to do next? Read the [entire guide on my blog](https://codewithmukesh.com/b
     - Note - Make sure that you use the same password that has been configured in the `docker-compose.yml` file. By default, `securePassword123` is configured.
 - 5005 & 5006 are the ports setup to run blazorHero on Docker, so make sure that these ports are free. You could also change the ports in the `docker-compose.yml` and `Server\Dockerfile` files.
 - Now navigate back to the root of the BlazorHero Project on your local machine and run the following via terminal - `docker-compose -f 'docker-compose.yml' up --build`
-- This will start pulling MSSQL Server Image from Docker Hub if you don't already have this image. It's around 500+ Mbs of download.
+
+- This will start pulling PostgreSQL Server Image from Docker Hub if you don't already have this image. It's around 500+ Mbs of download.
 - Once that is done, dotnet SDKs and runtimes are downloaded, if not present already. That's almost 200+ more Mbs of download.
 - PS If you find any issues while Docker installs the nuget packages, it is most likely that your ssl certificates are not installed properly. Apart from that I also added the `--disable-parallel` in the `Server\Dockerfile`to ensure network issues don't pop-up. You can remove this option to speed up the build process.
-- That's almost everything. Once the containers are available, migrations are updated in the MSSQL DB, default data is seeded.
+- That's almost everything. Once the containers are available, migrations are updated in the PostgreSQL DB, default data is seeded.
 - Browse to https://localhost:5005/ to use your version of BlazorHero !
 
 # Complete Documentation :rocket:

@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: src/Server/Dockerfile
     environment:
-      - "ConnectionStrings__DefaultConnection=Server=db;Database=BlazorHero;User=sa;Password=Your_password123;MultipleActiveResultSets=true"
+      - "ConnectionStrings__DefaultConnection=Username=postgres;Password=postgres;Server=pg_db1;Database=BlazorHero"
       - "ASPNETCORE_Kestrel__Certificates__Default__Password=securePassword123"
       - "ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx"
     volumes:
@@ -21,8 +21,10 @@ services:
     container_name: blazorhero
 
   db:
-    image: "mcr.microsoft.com/mssql/server"
+    image: "postgres"
+    container_name: pg_db1
+    ports:
+      - "5432:5432"
+    restart: always
     environment:
-      - "SA_PASSWORD=Your_password123"
-      - "ACCEPT_EULA=Y"
-    container_name: mssql
+      POSTGRES_PASSWORD: postgres

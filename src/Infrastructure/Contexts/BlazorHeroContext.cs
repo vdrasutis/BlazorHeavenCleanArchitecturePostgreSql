@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BlazorHero.CleanArchitecture.Domain.Entities.ExtendedAttributes;
 using BlazorHero.CleanArchitecture.Domain.Entities.Misc;
+using System;
 
 namespace BlazorHero.CleanArchitecture.Infrastructure.Contexts
 {
@@ -67,12 +68,12 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Contexts
             {
                 property.SetColumnType("decimal(18,2)");
             }
-            
+
             foreach (var property in builder.Model.GetEntityTypes()
                 .SelectMany(t => t.GetProperties())
                 .Where(p => p.Name is "LastModifiedBy" or "CreatedBy"))
             {
-                property.SetColumnType("nvarchar(128)");
+                property.SetColumnType("varchar(128)");
             }
             
             base.OnModelCreating(builder);
@@ -129,6 +130,11 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Contexts
             {
                 entity.ToTable("UserTokens", "Identity");
             });
+        }
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<DateTime>().HaveConversion<DateTimeToIso8601StringConverter>();
         }
     }
 }

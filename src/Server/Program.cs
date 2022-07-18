@@ -2,11 +2,15 @@
 using System.Threading.Tasks;
 using BlazorHero.CleanArchitecture.Infrastructure.Contexts;
 using BlazorHero.CleanArchitecture.Server.Extensions;
+//using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+
+//var builder = WebApplication.CreateBuilder(args);
 
 namespace BlazorHero.CleanArchitecture.Server
 {
@@ -15,7 +19,7 @@ namespace BlazorHero.CleanArchitecture.Server
         public async static Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
+            
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -24,7 +28,7 @@ namespace BlazorHero.CleanArchitecture.Server
                 {
                     var context = services.GetRequiredService<BlazorHeroContext>();
 
-                    if (context.Database.IsSqlServer())
+                    if (context.Database.IsNpgsql())
                     {
                         context.Database.Migrate();
                     }

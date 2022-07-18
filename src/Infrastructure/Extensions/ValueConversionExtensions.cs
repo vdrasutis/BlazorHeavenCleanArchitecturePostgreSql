@@ -26,7 +26,7 @@ namespace BlazorHero.CleanArchitecture.Infrastructure.Extensions
             propertyBuilder.HasConversion(converter);
             propertyBuilder.Metadata.SetValueConverter(converter);
             propertyBuilder.Metadata.SetValueComparer(comparer);
-            propertyBuilder.HasColumnType("nvarchar(max)");
+            propertyBuilder.HasColumnType("varchar");
 
             return propertyBuilder;
         }

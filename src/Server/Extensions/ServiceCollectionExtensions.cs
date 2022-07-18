@@ -209,13 +209,10 @@ namespace BlazorHero.CleanArchitecture.Server.Extensions
             return services;
         }
 
-        internal static IServiceCollection AddDatabase(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        internal static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
             => services
-                .AddDbContext<BlazorHeroContext>(options => options
-                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection")))
-            .AddTransient<IDatabaseSeeder, DatabaseSeeder>();
+                .AddDbContext<BlazorHeroContext>(options => options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")))
+                .AddTransient<IDatabaseSeeder, DatabaseSeeder>();
 
         internal static IServiceCollection AddCurrentUserService(this IServiceCollection services)
         {
